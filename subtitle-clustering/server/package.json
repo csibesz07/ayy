@@ -1,0 +1,17 @@
+{
+    "name": "lookup-server",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "4.13.3",
+        "sql.js": "0.3.2",
+        "fs": "0.0.2"
+    },
+    "devDependencies": {
+        "eslint": "3.15.0",
+        "eslint-config-airbnb": "14.1.0",
+        "eslint-plugin-import": "2.2.0",
+        "eslint-plugin-jsx-a11y": "4.0.0",
+        "eslint-plugin-react": "6.9.0"
+    }
+}
