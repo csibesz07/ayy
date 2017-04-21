@@ -1,8 +1,10 @@
 import React from "react";
-import {Menu} from "semantic-ui-react";
+import {Menu,Divider} from "semantic-ui-react";
 import ToggleDisplay from 'react-toggle-display';
 import $ from 'jquery';
 import { StickyContainer, Sticky } from 'react-sticky';
+
+import './TabBar.css';
 
 export default class TabBar extends React.Component {
     constructor(props) {

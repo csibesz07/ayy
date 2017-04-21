@@ -1,8 +1,11 @@
 import React from "react";
-import {Step} from "semantic-ui-react";
+import {Step,Divider} from "semantic-ui-react";
 import ToggleDisplay from 'react-toggle-display';
 import { StickyContainer, Sticky } from 'react-sticky';
 import $ from 'jquery';
+import Headroom from 'react-headroom';
+
+import './Stepper.css';
 
 export default class Stepper extends React.Component {
     constructor(props) {
@@ -38,10 +41,11 @@ export default class Stepper extends React.Component {
 
         return (
             <div>
-                <Step.Group {...otherProps}>
+                <Headroom>
+                <Step.Group style={{background:null}} {...otherProps}>
                   {stepItems}
                 </Step.Group>
-                {stepPanels[0] && <br/>}
+                </Headroom>
                 {stepPanels}
             </div>
         );
