@@ -7,30 +7,11 @@ import $ from 'jquery';
 export default class Stepper extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    onSelected() {
-      this.refs.sticky.recomputeState();
-    }
-
-    signalSelected() {
-      try {
-        if (this.refs.selected && this.refs.selected.getWrappedInstance().onSelected){
-          this.refs.selected.getWrappedInstance().onSelected();
-        }
-      }
-      //ignore error
-      catch(err) {
-
-      }
-    }
-
-    componentDidUpdate() {
-      this.signalSelected();
+        this.state={currentStep:props.initialStep};
     }
 
     render() {
-        const {sticky,steps, currentStep, onStepClick, ...otherProps} = this.props;
+        const {steps, currentStep, onStepClick, ...otherProps} = this.props;
 
         const stepItems = steps.map(stepInfo => {
             const {name} = stepInfo;
@@ -39,8 +20,8 @@ export default class Stepper extends React.Component {
                 <Step
                     {...stepInfo}
                     name={name}
-                    active={currentStep === name}
-                    onClick={() => onStepClick(name)}
+                    active={this.state.currentStep === name}
+                    onClick={() => {onStepClick(name);this.setState({'currentStep':name})}}
                 />
             );
         });
@@ -49,34 +30,19 @@ export default class Stepper extends React.Component {
             const {name, component : StepComponent, componentProps} = stepInfo;
             if (StepComponent)
                 return (
-                  <ToggleDisplay show={name === currentStep} key={name}>
+                  <ToggleDisplay show={name === this.state.currentStep} key={name}>
                     <StepComponent {...componentProps}/>
                   </ToggleDisplay>
                 )
         })
 
-        var isPanel=sticky == "panels";
-
-        if (isPanel)
-          return (
-                <Sticky ref='sticky' stickyStyle={{background:'white',zIndex:20}}>
-                      <Step.Group {...otherProps}>
-                        {stepItems}
-                      </Step.Group>
-                  <br/>
-                  {stepPanels}
-                </Sticky>
-          );
-
         return (
             <div>
-                  <Sticky isActive={sticky!==undefined} ref='sticky' stickyStyle={{background:'white',zIndex:20}}>
-                      <Step.Group {...otherProps}>
-                        {stepItems}
-                      </Step.Group>
-                  </Sticky>
-                  <br/>
-                  {stepPanels}
+                <Step.Group {...otherProps}>
+                  {stepItems}
+                </Step.Group>
+                {stepPanels[0] && <br/>}
+                {stepPanels}
             </div>
         );
       }

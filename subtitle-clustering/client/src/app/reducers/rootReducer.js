@@ -2,13 +2,13 @@ import {combineReducers} from "redux";
 
 //import {reduceReducers} from "common/utils/reducerUtils";
 
-import tabReducer from "features/tabs/tabReducer";
-import stepReducer from "features/steps/stepReducer";
+//import tabReducer from "features/tabs/tabReducer";
+//import stepReducer from "features/steps/stepReducer";
 
 
 const combinedReducer = combineReducers({
-    tabs : tabReducer,
-    steps: stepReducer
+    //tabs : tabReducer,
+    //steps: stepReducer
 });
 
 

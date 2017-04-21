@@ -10,7 +10,7 @@ export default function configureStore(preloadedState) {
     const middlewareEnhancer = applyMiddleware(...middlewares);
 
     const storeEnhancers = [middlewareEnhancer];
-    
+
     const composedEnhancer = composeWithDevTools(...storeEnhancers);
 
     const store = createStore(

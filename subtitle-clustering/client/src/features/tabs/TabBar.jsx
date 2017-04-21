@@ -7,30 +7,14 @@ import { StickyContainer, Sticky } from 'react-sticky';
 export default class TabBar extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    signalSelected() {
-      try {
-        if (this.refs.selected && this.refs.selected.getWrappedInstance().onSelected){
-          this.refs.selected.getWrappedInstance().onSelected();
-        }
-      }
-      //ignore error
-      catch(err) {
-
-      }
-    }
-
-    onSelected() {
-      this.refs.sticky.recomputeState();
-    }
-
-    componentDidUpdate() {
-      this.signalSelected();
+        var initialTab=props.initialTab;
+        if (!initialTab)
+          initialTab=props.tabs[0]?props.tabs[0].name:undefined;
+        this.state={currentTab:initialTab};
     }
 
     render () {
-      const {sticky,tabs, currentTab, onTabClick, ...otherProps} = this.props;
+      const {sticky,tabs, initialTab, onTabClick, ...otherProps} = this.props;
 
       const tabItems = tabs.map(tabInfo => {
           const {name, label, icon} = tabInfo;
@@ -39,22 +23,18 @@ export default class TabBar extends React.Component {
                   name={name}
                   content={label}
                   icon={icon}
-                  active={currentTab === name}
-                  onClick={() => onTabClick(name)}
+                  active={this.state.currentTab === name}
+                  onClick={() => {onTabClick(name);this.setState({currentTab:name});}}
               />
           );
       });
 
-      var selectedHasComponent=false;
-
       const tabPanels = tabs.map(tabInfo => {
           const {name, component : TabComponent, componentProps} = tabInfo;
           if (TabComponent) {
-            if (name===currentTab)
-              selectedHasComponent=true;
             return (
-                <ToggleDisplay show={name === currentTab} key={name}>
-                    <TabComponent ref={name === currentTab && 'selected'} {...componentProps}/>
+                <ToggleDisplay show={name === this.state.currentTab} key={name}>
+                    <TabComponent ref={name === this.state.currentTab && 'selected'} {...componentProps}/>
                 </ToggleDisplay>
             )
           }
@@ -72,15 +52,29 @@ export default class TabBar extends React.Component {
           </Sticky>
         );
 
-      return (
-          <div>
-            <Sticky isActive={sticky!==undefined || !selectedHasComponent} ref='sticky' stickyStyle={{background:'white',zIndex:20}}>
-                  <Menu {...otherProps}>
-                      {tabItems}
-                  </Menu>
-                </Sticky>
-              {tabPanels}
-          </div>
-      );
+      if (sticky!==undefined)
+        return (
+            <div>
+              <Sticky isActive={sticky!==undefined} ref='sticky' stickyStyle={{background:'white',zIndex:20}}>
+                    <Menu {...otherProps}>
+                        {tabItems}
+                    </Menu>
+                  </Sticky>
+                {tabPanels}
+            </div>
+        );
+
+        return (
+            <div>
+                <Menu {...otherProps}>
+                    {tabItems}
+                </Menu>
+                {tabPanels}
+            </div>
+        );
     }
 }
+
+TabBar.defaultProps = {
+  currentTab: undefined
+};
