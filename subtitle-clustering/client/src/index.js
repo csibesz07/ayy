@@ -6,7 +6,22 @@ import "semantic-ui-css/semantic.css";
 
 import configureStore from "app/store/configureStore";
 
-const store = configureStore();
+const initialState={
+    'selector' : {
+        'main-tab': {
+            'name':'home'
+        },
+        'msc-stepper': {
+            'name': 'gyujt'
+        },
+        'main-nav-selected': {
+          'name' : 'home'
+        }
+    }
+}
+
+const store = configureStore(initialState);
+store.subscribe(() => console.log(store.getState()))
 
 // Save a reference to the root element for reuse
 const rootEl = document.getElementById("root");

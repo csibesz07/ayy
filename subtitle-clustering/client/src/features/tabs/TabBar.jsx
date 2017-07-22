@@ -7,76 +7,35 @@ import { StickyContainer, Sticky } from 'react-sticky';
 import './TabBar.css';
 
 export default class TabBar extends React.Component {
-    constructor(props) {
-        super(props);
-        var initialTab=props.initialTab;
-        if (!initialTab)
-          initialTab=props.tabs[0]?props.tabs[0].name:undefined;
-        this.state={currentTab:initialTab};
-    }
-
     render () {
-      const {sticky,tabs, initialTab, onTabClick, ...otherProps} = this.props;
+      const {current, onClick, childrens, childName,displayComponents, ...otherProps} = this.props;
 
-      const tabItems = tabs.map(tabInfo => {
+      var that=this;
+
+      const tabItems = childrens.map(tabInfo => {
           const {name, label, icon} = tabInfo;
           return (
               <Menu.Item
+                  key={name}
                   name={name}
                   content={label}
                   icon={icon}
-                  active={this.state.currentTab === name}
-                  onClick={() => {onTabClick(name);this.setState({currentTab:name});}}
+                  active={current === name}
+                  onClick={() => onClick(name,childName)}
               />
           );
       });
 
-      const tabPanels = tabs.map(tabInfo => {
-          const {name, component : TabComponent, componentProps} = tabInfo;
-          if (TabComponent) {
-            return (
-                <ToggleDisplay show={name === this.state.currentTab} key={name}>
-                    <TabComponent ref={name === this.state.currentTab && 'selected'} {...componentProps}/>
-                </ToggleDisplay>
-            )
-          }
-      })
+      var selected=childrens.find(tabInfo => tabInfo.name === current);
+      const Component=selected?selected.component:undefined;
 
-      var isPanel=sticky == "panels";
-
-      if (isPanel)
-        return (
-          <Sticky ref='sticky' stickyStyle={{background:'white',zIndex:20}}>
-              <Menu {...otherProps}>
-                  {tabItems}
-              </Menu>
-          {tabPanels}
-          </Sticky>
-        );
-
-      if (sticky!==undefined)
-        return (
-            <div>
-              <Sticky isActive={sticky!==undefined} ref='sticky' stickyStyle={{background:'white',zIndex:20}}>
-                    <Menu {...otherProps}>
-                        {tabItems}
-                    </Menu>
-                  </Sticky>
-                {tabPanels}
-            </div>
-        );
-
-        return (
+      return (
             <div>
                 <Menu {...otherProps}>
                     {tabItems}
                 </Menu>
-                {tabPanels}
+                {selected && displayComponents && Component!=undefined && <Component {...selected.componentProps}/>}
             </div>
         );
     }
 }
-
-TabBar.defaultProps = {
-  currentTab: undefined
-};

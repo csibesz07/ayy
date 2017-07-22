@@ -1,3 +1,5 @@
+import { bindActionCreators } from 'redux'
+
 export function createReducer(initialState, fnMap) {
     return (state = initialState, {type, payload}) => {
         const handler = fnMap[type];
@@ -34,3 +36,7 @@ export function createConditionalSliceReducer(sliceName, fnMap) {
         return state;
     }
 }
+
+export function createActionsUsesProps(action) {
+   return (dispatch,props) => bindActionCreators(action(props,dispatch),dispatch)
+ }

@@ -4,11 +4,10 @@ import {combineReducers} from "redux";
 
 //import tabReducer from "features/tabs/tabReducer";
 //import stepReducer from "features/steps/stepReducer";
-
+import selectorReducer from "features/selectorReducers";
 
 const combinedReducer = combineReducers({
-    //tabs : tabReducer,
-    //steps: stepReducer
+    selector: selectorReducer
 });
 
 
