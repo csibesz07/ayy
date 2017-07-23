@@ -6,16 +6,22 @@ import { StickyContainer, Sticky } from 'react-sticky';
 
 export default class ComponentSelector extends React.Component {
     render () {
-      const {current,components} = this.props;
-
-      var selected=components.find(component => component.name === current);
+      const {current,components,children} = this.props;
+      if (!components)
+          return (null)
+      var selected=components.findIndex(component => component.name === current);
       var CurrentComponent;
-      if (selected)
-          CurrentComponent=selected.component;
-
-      return ( <div>
-                  {selected && CurrentComponent && <CurrentComponent {...selected.componentProps}/>}
-              </div>
-      )
+      if (selected>-1)
+          return (
+            <div>
+              <div/>
+              {React.Children.map(children, (child, i) => {
+                 if (i == selected)
+                    return child
+                 return (null)
+              })}
+            </div>
+          )
+      return (<div/>)
     }
 }

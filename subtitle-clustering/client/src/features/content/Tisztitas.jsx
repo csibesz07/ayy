@@ -13,7 +13,7 @@ export default class Tisztitas extends React.Component {
 
   render() {
       return (
-          <Segment padded piled>
+          <div>
             <Header as="h1" textAlign="center">Előfeldolgozás</Header>
             <p className="bigtext">
             Az előfeldolgozás az a szövegfeldolgozásnál használt folyamat amely során kiszűrjük a bemenetben található zajokat és megpróbáljuk egységes formára hozni a bemenet valamiféle normalizálás, szótár vagy generátorok segítségével. Ebbe bele tartozik a forrásfájl típusának (doc, rtf, pub, pdf, xml, json) szöveges fájllá való átdolgozása. Minél hatékonyabban valósítjuk meg az átalakítást annál gyorsabb és pontosabb végeredményt kapunk a későbbiekben.
@@ -45,7 +45,7 @@ export default class Tisztitas extends React.Component {
             <Icon name="cut" loading size="massive"/>
             </Grid.Column>
             </Grid>
-          </Segment>
+          </div>
       )
   }
 }

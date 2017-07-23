@@ -7,7 +7,7 @@ export function select(storeID,selected) {
     };
 }
 
-export function selectAndChildToSelector(storeID,selectedID,childID,selected) {
+export function selectAndChildToSelected(storeID,selectedID,childID,selected) {
   return {
       type : SELECTED_AND_CHILD_TO_SELECTOR,
       payload : {"storeID":storeID,

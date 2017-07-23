@@ -17,9 +17,32 @@
     width: auto!important;
 }
 
-#main-tab-bar {
-  background-color: white;
+#main-tab .disabled {
+  color:white !important;
+}
+
+#main-tab .floated {
+  margin-bottom: 0 !important;
+}
+
+#main-tab, #main-tab .item:before{
+  background-color: transparent;
+  border-color: transparent;
   zIndex:20 !important;
+}
+
+.sticky {
+    background-color: white !important;
+    z-index: 10
+}
+
+#main-msc-info {
+  transition: all 0.2s ease-in-out;
+}
+
+.sticky #main-msc-info {
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2) !important;
+  z-index: 10 !important
 }
 
 .largetext,text {

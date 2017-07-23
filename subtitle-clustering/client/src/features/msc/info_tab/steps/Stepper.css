@@ -1,12 +1,1 @@
-.headroom{
-  position: relative !important;
-  z-index: -1 !important;
-  background-color: white;
-  padding-top: 1px;
-  transition: all 0.2s ease-in-out;
-}
 
-.headroom-wrapper {
-  height: 0px !important;
-  background-color: white;
-}

@@ -11,10 +11,13 @@ const initialState={
         'main-tab': {
             'name':'home'
         },
-        'msc-stepper': {
+        'main-msc':{
+          'name' : 'info'
+        },
+        'main-msc-info': {
             'name': 'gyujt'
         },
-        'main-nav-selected': {
+        'main-selected': {
           'name' : 'home'
         }
     }

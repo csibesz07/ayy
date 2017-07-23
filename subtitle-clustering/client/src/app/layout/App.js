@@ -8,58 +8,71 @@ import {
     Icon
 } from "semantic-ui-react";
 
-import TabBar from "features/tabs/TabBar";
-import Stepper from "features/msc/info_tab/steps/Stepper";
+import TabBar from "features/tabs/TabBar";;
 import NavContainer from "features/NavContainer";
 import ComponentSelectorContainer from "features/ComponentSelectorContainer";
+
+import ComponentSelector from "features/ComponentSelector";
+
+import InfoTab from "features/msc/info_tab/InfoTab";
+
+import Stepper from "features/msc/info_tab/steps/Stepper"
 
 import Tisztitas from "features/msc/info_tab/content/Tisztitas";
 import Gyujtes from "features/msc/info_tab/content/Gyujtes";
 
-import ComponentSelector from "features/ComponentSelector";
+import { da } from "common/utils/common"
 
 import './App.css';
 
 class App extends Component {
 
     render() {
-        const steps=[
-          { name:'gyujt', component: Gyujtes, icon: 'find', title: 'Gyüjtés', description: 'Feliratok gyüjtése'},
-          { name:'tisztit',component: Tisztitas, icon: 'filter', title: 'Tisztitás', description: 'Szavak szürése, átalakítása' },
+        const tabs = [
+            {name : "projects" , label: "Projektek", className: "header disabled", onClick: doNothing, img: "images/project.png", imgProps:{height:"45px",centered:true,floated:"left"}},
+            {name : "home", label : "Kezdőlap"},
+            {name : "msc", label : "Filmfeliratok klaszterezése"}
+        ];
+
+
+        const msc_tabs = [
+          {name : "build", label: "Cső építése"},
+          {name : "info", label: "Általános leírás"}
+        ]
+
+        const msc_info_steps=[
+          { name:'gyujt', icon: 'find', title: 'Gyüjtés', description: 'Feliratok gyüjtése'},
+          { name:'tisztit', icon: 'filter', title: 'Tisztitás', description: 'Szavak szürése, átalakítása' },
           { name:'doc2vec', icon: 'sort numeric descending', title: 'Vektorizálás', description: 'Dokumentum jellem generálás' },
           { name:'cluster', icon: 'tags', title: 'Clusterezés', description: 'Hasonloságok felfedezése, csoportosítás' },
           { name:'abrazol', icon: 'line chart', title: 'Ábrázolás', description: 'Eredmény kiértékelése, megjelenitése' },
         ];
 
-        const stepProps= {
-          fluid:true,pointing:true,size:"tiny",selectedStoreID:"main-nav-selected",storeID:'msc-stepper',childrens:steps,displayComponent:false
-        };
+        var MainTabBarContainer=NavContainer(TabBar);
+        var MscTabBarContainer=NavContainer(TabBar);
 
         var StepperContainer=NavContainer(Stepper);
 
-        const tabs = [
-            {name : "home",title: "", subtitle:"", image:"", label : "Home"},
-            {name : "msc", icon:"film",component : StepperContainer, componentProps:stepProps, label : "Movie Subtitle Clustering"}
-        ];
-
-        var TabBarContainer=NavContainer(TabBar);
-        var HeaderComponent=NavContainer(ComponentSelector);
-        var allComponents=[...steps,...tabs];
-
         return (
-          <StickyContainer withTaps={tabs}>
+          <StickyContainer>
             <div className="App">
               <div className="App-header">
+                <Container>
+                    <MainTabBarContainer inverted storeID="main-tab" id="main-tab" components={tabs} icon='labeled'/>
+                </Container>
                 <Header inverted as="h1">Hi</Header>
               </div>
-              <Sticky style={{transition: "box-shadow 1s ease"}} stickyStyle={{background:"white !important",zIndex:20,boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)"}} ref={"sticky"}>
-                <TabBarContainer selectedStoreID="main-nav-selected" id="main-tab-bar" storeID="main-tab" childrens={tabs} icon='labeled' stackable pointing secondary fluid widths={2} size="large" displayComponents/>
-              </Sticky>
-              <Divider section hidden/>
-              <Divider section hidden/>
-              <Container fluid text>
-                  <ComponentSelectorContainer storeID="main-nav-selected" components={allComponents}/>
-              </Container>
+              <Divider section hidden size="tiny"/>
+                <ComponentSelectorContainer storeID="main-tab" components={tabs.slice(1)}>
+                      <div/>
+                      <MscTabBarContainer sticky lower="fluid" upper="fluid center aligned" id="main-msc" storeID="main-msc" icon='labeled' components={msc_tabs} compact pointing secondary>
+                          <div/>
+                          <StepperContainer sticky lower="text" upper="fluid center aligned" id="main-msc-info" storeID="main-msc-info" components={msc_info_steps}  size="tiny" stickyStyle={{zIndex:10}}>
+                            <Gyujtes/>
+                            <Tisztitas/>
+                          </StepperContainer>
+                      </MscTabBarContainer>
+                </ComponentSelectorContainer>
             </div>
           </StickyContainer>
         );
@@ -70,6 +83,7 @@ class App extends Component {
     }
 }
 
+function doNothing(){}
 
 //                <ComponentSelector StoreID="main-nav-selected" components={allComponents}/>
 export default App;
