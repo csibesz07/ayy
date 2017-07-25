@@ -1,9 +1,23 @@
-.App-header {
-  z-index: 50 !important;
-  background-color: #222;
-  height: 20em;
-  padding: 20px;
-  color: white;
+#header-image {
+  z-index: 0 !important;
+  background-size: 100%;
+  background-position: 100% 85%;
+  position: absolute;
+  margin-top: -50px
+}
+
+.container {
+  width: 100%;
+}
+
+#header-image, #App-header{
+  height: 25em;
+  padding-bottom: 20px;
+}
+
+#header-text {
+  width: 100%;
+  margin-top: 5em;
   text-align: center;
 }
 
@@ -17,6 +31,17 @@
     width: auto!important;
 }
 
+#main-tab * {
+    transition: all 0.2s ease-in-out;
+}
+
+#main-tab {
+  border-radius: 0;
+  padding: 5px;
+  padding-left: 10px;
+  width:100% important;
+}
+
 #main-tab .disabled {
   color:white !important;
 }
@@ -26,29 +51,39 @@
 }
 
 #main-tab, #main-tab .item:before{
-  background-color: transparent;
+  transition: all 0.3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.3);
   border-color: transparent;
   zIndex:20 !important;
 }
 
-.sticky {
-    background-color: white !important;
-    z-index: 10
+.sticky #main-tab {
+  background-color: #222 !important;
+  z-index: 50 !important;
 }
 
-#main-msc-info {
+.sticky {
+    z-index: 1;
+}
+
+#main-msc {
+  padding-top: 1em;
+  margin: 5px;
+}
+
+.stepper {
+  background-color: transparent !important;
   transition: all 0.2s ease-in-out;
 }
 
-.sticky #main-msc-info {
+.sticky .stepper {
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2) !important;
-  z-index: 10 !important
 }
 
 .largetext,text {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
 }
 
 .bigtext,text {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }

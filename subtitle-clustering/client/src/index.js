@@ -6,25 +6,36 @@ import "semantic-ui-css/semantic.css";
 
 import configureStore from "app/store/configureStore";
 
+import App from "app/layout/App"
+
 const initialState={
-    'selector' : {
-        'main-tab': {
-            'name':'home'
+    'ui': {
+            'selectors' : {
+              'main-tab': {
+                  'name':'home'
+              },
+              'main-msc':{
+                'name' : 'build'
+              },
+              'main-msc-build':{
+                'name':'gyujt'
+              },
+              'main-msc-info': {
+                  'name': 'gyujt'
+              },
+              'main-selected': {
+                'name' : 'home'
+              }
+          }
         },
-        'main-msc':{
-          'name' : 'info'
-        },
-        'main-msc-info': {
-            'name': 'gyujt'
-        },
-        'main-selected': {
-          'name' : 'home'
-        }
+    "builder" : [],
+    'app-data' : {
+        'types': []
     }
 }
 
 const store = configureStore(initialState);
-store.subscribe(() => console.log(store.getState()))
+//store.subscribe(() => console.log(store.getState()))
 
 // Save a reference to the root element for reuse
 const rootEl = document.getElementById("root");
@@ -32,11 +43,10 @@ const rootEl = document.getElementById("root");
 // Create a reusable render method that we can call more than once
 let render = () => {
     // Dynamically import our main App component, and render it
-    const App = require("./app/layout/App.js").default;
 
     ReactDOM.render(
         <Provider store={store}>
-            <App />
+            <App/>
         </Provider>,
         rootEl
     );

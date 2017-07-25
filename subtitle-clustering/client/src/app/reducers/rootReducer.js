@@ -4,13 +4,22 @@ import {combineReducers} from "redux";
 
 //import tabReducer from "features/tabs/tabReducer";
 //import stepReducer from "features/steps/stepReducer";
-import selectorReducer from "features/selectorReducers";
+import selectorReducers from "features/selectorReducers";
+import builderReducers from "features/msc/builder_tab/builderReducers"
+import typeFetcherReducers from "features/msc/typeFetcher/typeFetcherReducers"
 
-const combinedReducer = combineReducers({
-    selector: selectorReducer
+
+const ui_state = combineReducers({
+    "selectors": selectorReducers
 });
 
 
-const rootReducer = combinedReducer;
+const app_data = combineReducers({
+    "types": typeFetcherReducers
+});
 
-export default rootReducer;
+export default combineReducers({
+    "ui": ui_state,
+    "builder": builderReducers,
+    "app-data": app_data,
+});

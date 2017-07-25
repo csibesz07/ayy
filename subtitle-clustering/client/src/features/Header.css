@@ -1,0 +1,12 @@
+#header-image {
+  width: 100% !important;
+  position: absolute;
+}
+
+#App-header {
+  margin-top: 50px;
+  position: relative;
+  color: white;
+  text-align: center;
+  width : 100% !important;
+}
