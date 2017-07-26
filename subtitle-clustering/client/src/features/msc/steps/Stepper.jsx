@@ -13,7 +13,7 @@ export default class Stepper extends React.Component {
     }
 
     render() {
-        const {grid,gridStyle,sticky,stickyStyle,upper,lower,current, onClick, align, components, childName, ...otherProps} = this.props;
+        const {grid,gridProps,sticky,stickyStyle,upper,lower,current, onClick, align, components, childName, ...otherProps} = this.props;
 
         const stepItems = components.map(stepInfo => {
             const {name} = stepInfo;
@@ -38,11 +38,6 @@ export default class Stepper extends React.Component {
                       {current.children}
                     </Container>)
 
-        var Final = (<div>
-                      {up}
-                      {low}
-                    </div>)
-
         if (sticky) {
             var [upp,loww] = add_sticky(up,low,stickyStyle)
             up=upp
@@ -55,7 +50,7 @@ export default class Stepper extends React.Component {
                       </div>)
 
         if (grid)
-            Final = add_grid([[up,upper],[low,lower]],{})
+            Final = add_grid([[up,gridProps],[low,lower]],{})
 
         return Final
       }

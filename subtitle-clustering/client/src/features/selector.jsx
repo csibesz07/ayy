@@ -22,11 +22,16 @@ export const createNavSelect = () => createSelector(
       }
 
       var children
-      if (children && children.length > pos && pos > -1)
+      if (children && pos > -1)
+        if (Array.isArray(children) && children.length > pos)
           children = children[pos]
+        else if (typeof children === 'function') {
+          children = children(pos)
+        }
 
       return {current: {"name":name,
                            "pos":pos,
-                           "children": children,...other}}
+                           "children": children,
+                           ...other}}
     }
 );

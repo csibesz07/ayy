@@ -6,7 +6,7 @@ import { StickyContainer, Sticky } from 'react-sticky';
 
 import './TabBar.css';
 
-import {add_sticky,add_grid} from "common/utils/common"
+import {add_sticky,add_grid,unwrap} from "common/utils/common"
 
 export default class TabBar extends React.Component {
     render () {
@@ -14,10 +14,9 @@ export default class TabBar extends React.Component {
 
       const tabItems =  components.map(tabInfo => {
           const {img,imgProps,name, label, icon,style, ...otherProps} = tabInfo;
-          if (img)
-            return (
-                <div>
-                  <Image src={img} {...imgProps} />
+            return unwrap(
+                <wrap>
+                  {img && <Image src={img} {...imgProps} />}
                   <Menu.Item
                       key={name}
                       name={name}
@@ -28,21 +27,8 @@ export default class TabBar extends React.Component {
                       style={{style}}
                       {...otherProps}
                   />
-                </div>
-            );
-          else
-            return (
-                <Menu.Item
-                    key={name}
-                    name={name}
-                    content={label}
-                    icon={icon}
-                    active={current.name === name}
-                    onClick={() => onClick(name,childName)}
-                    style={{style}}
-                    {...otherProps}
-                />
-            );
+                </wrap>
+            )
       });
 
       var up = (<Container {...upper}>

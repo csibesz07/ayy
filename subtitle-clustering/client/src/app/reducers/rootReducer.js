@@ -21,5 +21,5 @@ const app_data = combineReducers({
 export default combineReducers({
     "ui": ui_state,
     "builder": builderReducers,
-    "app-data": app_data,
+    "app_data": app_data,
 });

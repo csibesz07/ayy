@@ -36,7 +36,29 @@ export function add_sticky(upper,lower,stickyStyle) {
 }
 
 export function CurrentChildrenDiv(props) {
-      return (<div>
+      return unwrap(<wrap>
                 {props.current.children}
-             </div>)
+                </wrap>)
 }
+
+
+//https://www.wptutor.io/web/js/react-multiple-elements-without-wrapper
+export function unwrap(element) {
+  return addKeys(element.props.children);
+};
+
+export function addKeys(arr) {
+  if (!arr.map)
+    return arr
+  return arr.map((obj, idx) => {
+    if (obj instanceof Object && obj.hasOwnProperty('key') && obj.key === null) {
+      return React.cloneElement(obj, {key: idx});
+    }
+    return obj;
+  });
+};
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};

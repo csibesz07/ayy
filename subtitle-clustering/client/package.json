@@ -4,23 +4,24 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "devDependencies": {
-    "enzyme": "2.4.1",
-    "react-addons-test-utils": "15.4.0",
-    "react-scripts": "0.8.5",
+    "enzyme": "2.9.1",
+    "react-addons-test-utils": "15.6.0",
+    "react-scripts": "1.0.10",
     "semantic-ui": "^2.2.7"
   },
   "dependencies": {
-    "babel-plugin-transform-class-properties": "6.22.0",
+    "babel-plugin-transform-class-properties": "6.24.1",
     "jquery": "^3.2.1",
-    "react": "15.4.0",
+    "react": "15.6.1",
     "react-css-transition-replace": "^2.2.1",
-    "react-dom": "15.4.0",
+    "react-dom": "15.6.1",
+    "react-numeric-input": "^2.0.9",
     "react-redux": "^5.0.4",
     "react-sticky": "5.0.8",
     "redux": "^3.6.0",
     "redux-save-state": "^1.0.1",
     "semantic-ui": "2.2.7",
-    "semantic-ui-react": "^0.68.0"
+    "semantic-ui-react": "^0.71.2"
   },
   "scripts": {
     "start": "react-scripts start",
