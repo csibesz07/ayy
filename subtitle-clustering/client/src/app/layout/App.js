@@ -9,6 +9,7 @@ import Gyujtes from "features/msc/info_tab/content/Gyujtes";
 import { da, CurrentChildrenDiv} from "common/utils/common"
 import HeaderComponent from "features/HeaderComponent"
 import BuilderContainer from "features/msc/builder_tab/BuilderContainer"
+import BuilderStepContainer from "features/msc/builder_tab/BuilderStepContainer"
 
 import {getTypeForTask,propsByType} from "features/msc/builder_tab/common"
 
@@ -22,8 +23,8 @@ export default class App extends Component {
     render() {
         const tabs = [
             {name : "projects" , label: "Projektek", className: "header disabled", onClick: doNothing, img: "images/project.png", imgProps:{height:"45px",floated:"left"}},
-            {name : "home", label : "Kezdőlap",desc:"Néhány szó erről az oldalról." ,image:"images/moviesseats.jpg"},
-            {name : "msc", label : "Filmfeliratok klaszterezése",desc:"Segítünk kiválasztani következő filmedet",image:"images/home.jpg"}
+            {name : "home", label : "Kezdőlap",desc:"Néhány szó erről az oldalról." ,image:"images/home.jpg"},
+            {name : "msc", label : "Filmfeliratok klaszterezése",desc:"Segítünk kiválasztani következő filmedet",image:"images/moviesseats.jpg"}
         ];
 
 
@@ -66,14 +67,6 @@ export default class App extends Component {
                     lower:{...builderStepProps.lower,
                         className: builderStepProps.lower.className + " text centered"}}
 
-
-        var msc_build_steps = this.props.build_tasks.map( task => {
-                      const {type,key} = getTypeForTask(this.props.types,task)
-                      return {...task, title:task.name,
-                        ...propsByType[key],
-                        description: key}
-                      })
-
         return (
           <StickyContainer>
             <div id="app">
@@ -86,22 +79,23 @@ export default class App extends Component {
               </HeaderContainer>
           <StickyContainer>
                 <MainContainer storeID="main-tab" components={tabs.slice(1)}>
+                      <div/>
                       <MscTabBarContainer
                       sticky lower={{className:"fluid"}}
                       upper={{style:{backgroundColor: "white"},className:"fluid center aligned"}} id="main-msc"
                       storeID="main-msc" icon='labeled' components={msc_tabs} compact pointing secondary
                       stickyStyle={{stickyStyle:{boxShadow: "0px 3px 5px rgba(0, 0, 0, 0.2)"}}}>
-                        <StepperContainer selectedStoreID="main-selected"
-                            storeID="main-msc-build" components={msc_build_steps} {...builderStepProps}>
-                            {(pos) =>
-                            <BuilderContainer pos={pos}/>}
-                        </StepperContainer>
-                         <StepperContainer selectedStoreID="main-selected" storeID="main-msc-info"
-                              components={msc_info_steps}
-                              {...steppersProps}>
-                            <Gyujtes/>
-                            <Tisztitas/>
-                          </StepperContainer>
+                      <BuilderStepContainer selectedStoreID="main-selected"
+                          storeID="main-msc-build" {...builderStepProps}>
+                          {(pos) =>
+                          <BuilderContainer pos={pos}/>}
+                      </BuilderStepContainer>
+                      <StepperContainer selectedStoreID="main-selected" storeID="main-msc-info"
+                           components={msc_info_steps}
+                           {...steppersProps}>
+                         <Gyujtes/>
+                         <Tisztitas/>
+                       </StepperContainer>
                       </MscTabBarContainer>
                 </MainContainer>
                 </StickyContainer>

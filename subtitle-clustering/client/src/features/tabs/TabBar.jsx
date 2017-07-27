@@ -13,17 +13,17 @@ export default class TabBar extends React.Component {
       const {divContainer,grid,gridStyle,sticky,stickyStyle,upper,lower,current, onClick,align, components, childName,displayComponents, ...otherProps} = this.props;
 
       const tabItems =  components.map(tabInfo => {
-          const {img,imgProps,name, label, icon,style, ...otherProps} = tabInfo;
+          const {id,img,imgProps,name, label, icon,style, ...otherProps} = tabInfo;
             return unwrap(
                 <wrap>
                   {img && <Image src={img} {...imgProps} />}
                   <Menu.Item
-                      key={name}
+                      key={id || name}
                       name={name}
                       content={label}
                       icon={icon}
-                      active={current.name === name}
-                      onClick={() => onClick(name,childName)}
+                      active={current.id === name || current.id === id}
+                      onClick={() => onClick(id || name,childName)}
                       style={{style}}
                       {...otherProps}
                   />

@@ -8,16 +8,16 @@ export const createSelect = () => createSelector(
 );
 
 export const createNavSelect = () => createSelector(
-    [(state,props) => state.ui.selectors[props.storeID].name,
+    [(state,props) => state.ui.selectors[props.storeID].id,
      (_,props) => props.components,
      (_,props) => props.children
    ],
-    (name,components,children) => {
+    (id,components,children) => {
       var pos = -1
       var other = {}
 
       if (components) {
-        pos = components.findIndex((obj) => obj.name == name)
+        pos = components.findIndex((obj) => obj.id == id || obj.name == id)
         other = components[pos]
       }
 
@@ -29,7 +29,7 @@ export const createNavSelect = () => createSelector(
           children = children(pos)
         }
 
-      return {current: {"name":name,
+      return {current:    {"id":id,
                            "pos":pos,
                            "children": children,
                            ...other}}

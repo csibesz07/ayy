@@ -1,1 +1,2 @@
-export const FETCH_TYPES = "FETCH_TYPES";
+export const TYPES_FETCHED = "TYPES_FETCHED";
+export const TYPES_FETCH = "TYPES_FETCH ";

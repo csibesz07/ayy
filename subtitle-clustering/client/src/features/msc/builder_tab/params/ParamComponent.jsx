@@ -13,7 +13,7 @@ export default class ParamComponent extends React.Component {
     }
 
     render() {
-        var {defaultParam,name,pv,type, ...otherProps} = this.props;
+        var {onParamChange,defaultParam,name,pv,type, ...otherProps} = this.props;
 
         var Final=null
 
@@ -31,10 +31,10 @@ export default class ParamComponent extends React.Component {
 
         switch (type) {
           case "float":
-            Final = <NumericInput value={defaultParam} step={0.1} precision={2} value={defaultParam}/>
+            Final = <NumericInput onChange={value=> onParamChange(value)} value={defaultParam} step={0.1} precision={2} value={defaultParam}/>
             break;
           case "int":
-            Final = <NumericInput value={defaultParam}/>
+            Final = <NumericInput onChange={value=> onParamChange(value)} value={defaultParam}/>
             break;
           case "string":
             Final =   <Input
@@ -42,10 +42,11 @@ export default class ParamComponent extends React.Component {
                         labelPosition='right'
                         placeholder='Írb be a paramétert'
                         value={defaultParam}
+                        onChange={(e,data)=> onParamChange(data.value)}
                       />
             break;
           case "bool":
-            Final = <Checkbox toggle checked={defaultParam}/>
+            Final = <Checkbox toggle checked={defaultParam} onChange={(e,data)=> onParamChange(data.value)}/>
             break;
           default:
             if (pv)
@@ -58,7 +59,7 @@ export default class ParamComponent extends React.Component {
                           name="name"
                           value={value}
                           checked={defaultParam === value}
-                          onChange={() => ({})}
+                          onChange={(e,data)=> onParamChange(data.value)}
                         />
                       </Form.Field>)
                     }

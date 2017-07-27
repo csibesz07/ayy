@@ -1,5 +1,5 @@
 import React from "react";
-import {Step,Divider,Container,Grid} from "semantic-ui-react";
+import {Step,Divider,Container,Grid,Dimmer,Loader,Segment,Image} from "semantic-ui-react";
 import { StickyContainer, Sticky } from 'react-sticky';
 
 import './Stepper.css';
@@ -8,22 +8,25 @@ import Headroom from "react-headroom"
 import {add_sticky,add_grid} from "common/utils/common"
 
 export default class Stepper extends React.Component {
-    constructor(props){
-      super(props)
-    }
 
     render() {
-        const {grid,gridProps,sticky,stickyStyle,upper,lower,current, onClick, align, components, childName, ...otherProps} = this.props;
+        const {isFetching,grid,gridProps,sticky,stickyStyle,upper,lower,current, onClick, align, components, childName, ...otherProps} = this.props;
+
+        const loading =  <span>
+                              <Image inline size="small" src='images/mini-paragraph.png' />
+                        </span>
 
         const stepItems = components.map(stepInfo => {
-            const {name} = stepInfo;
+            const {name,id,icon,description,isStepFetching} = stepInfo;
             return (
                 <Step
                     {...stepInfo}
-                    key={name}
+                    description={((isFetching || isStepFetching) && loading) || description}
+                    icon={((isFetching || isStepFetching) && 'spinner loading') || icon}
+                    key={id || name}
                     name={name}
-                    active={current.name === name}
-                    onClick={() => onClick(name,childName)}
+                    active={current.id === name || current.id ===id}
+                    onClick={() => onClick(id || name,childName)}
                 />
             );
         });

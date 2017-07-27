@@ -5,7 +5,7 @@ import {combineReducers} from "redux";
 //import tabReducer from "features/tabs/tabReducer";
 //import stepReducer from "features/steps/stepReducer";
 import selectorReducers from "features/selectorReducers";
-import builderReducers from "features/msc/builder_tab/builderReducers"
+import builderReducers from "features/msc/builder_tab/builder/builderReducers"
 import typeFetcherReducers from "features/msc/typeFetcher/typeFetcherReducers"
 
 

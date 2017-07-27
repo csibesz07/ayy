@@ -12,7 +12,7 @@ export default class ParamContainer extends React.Component {
     }
 
     render() {
-        const {global_params,local_params, defaultParams ,...otherProps} = this.props;
+        const {onParamChange,global_params,local_params, defaultParams ,...otherProps} = this.props;
 
         var generate_params = (title,params) =>
             unwrap(<wrap>
@@ -38,7 +38,9 @@ export default class ParamContainer extends React.Component {
                                   </Item.Group>
                                 </Grid.Column>
                                 <Grid.Column verticalAlign="middle" width={6}>
-                                    <ParamComponent defaultParam={defaultParams[key]} name={key} type={params[key].type} pv={params[key].possible_values}/>
+                                    <ParamComponent onParamChange={value=>onParamChange({...defaultParams, [key]:value})}
+                                    defaultParam={defaultParams[key]}
+                                    name={key} type={params[key].type} pv={params[key].possible_values}/>
                               </Grid.Column>
                               </Grid.Row>)
                             }

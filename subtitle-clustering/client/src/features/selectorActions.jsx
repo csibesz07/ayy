@@ -3,7 +3,7 @@ export function select(storeID,selected) {
     return {
         type : SELECTED,
         payload : {"storeID":storeID,
-                  "selected":selected}
+                   "selected":selected}
     };
 }
 

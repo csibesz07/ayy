@@ -30,21 +30,21 @@ const makeMapStateToPropsWithMap = (maps) => {
 const actions = (props,dispatch) =>  {
         if (props.onClick) return {}
 
-        return {onClick : (name,state) => {
-          var child=props.components.find(x=>x.name===name);
+        return {onClick : (id,state) => {
+          var child=props.components.find(x=>x.id===id || x.name===id);
           if (child.OnClick)
-            return child.Onclick(name,state)
+            return child.Onclick(id,state)
           if (props.selectedStoreID)
-            return selectAndToSelector(props.storeID,props.selectedStoreID,name)
-          return select(props.storeID,name);
+            return selectAndToSelector(props.storeID,props.selectedStoreID,id)
+          return select(props.storeID,id);
           /*if (props.selectedStoreID) {
-              return selectAndToSelector(props.storeID,props.selectedStoreID,name);
+              return selectAndToSelector(props.storeID,props.selectedStoreID,id);
           }
           if (props.selectedChildStoreID)
-              return selectAndChildToSelected(props.storeID,props.selectedStoreID,selectedChildStoreID,name);
+              return selectAndChildToSelected(props.storeID,props.selectedStoreID,selectedChildStoreID,id);
           //if (child.component && child.componentProps.storeID)
-          //    return selectAndChildToSelector(props.storeID,props.selectedStoreID,child.componentProps.storeID,name);
-          return select(props.storeID,name);*/
+          //    return selectAndChildToSelector(props.storeID,props.selectedStoreID,child.componentProps.storeID,id);
+          return select(props.storeID,id);*/
         }}
 };
 

@@ -6,6 +6,10 @@
   margin-top: -50px
 }
 
+.dimmer {
+  z-index: 5 !important
+}
+
 .container {
   width: 100%;
 }
@@ -63,7 +67,7 @@
 }
 
 .sticky {
-    z-index: 1;
+    z-index: 10;
 }
 
 #main-msc {
