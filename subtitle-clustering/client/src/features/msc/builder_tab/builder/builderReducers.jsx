@@ -5,7 +5,7 @@ import {createReducer} from "common/utils/reducerUtils";
 
 import { makeid,checkPos,deepCopy} from "common/utils/common"
 
-function initReducer(state,payload,onlyCopyPos,deepCopyState) {
+function initReducer(state,payload,onlyCopyPos,arrayCopy,deepCopyState) {
     if (!checkPos(payload.pos) && !payload.id)
         throw new Error("No id and no pos provided.")
 
@@ -20,14 +20,15 @@ function initReducer(state,payload,onlyCopyPos,deepCopyState) {
     var exists = -1 < pos && pos < state.length
 
     var newState
-    if (onlyCopyPos) {
-      state.splice(pos,1,deepCopy(state[pos]))
-      newState=[...state]
-    }
-    else if (deepCopyState)
+    if (deepCopyState)
       newState=deepCopy(state)
-    else
-      newState=[...state]
+    else {
+      newState = state
+      if (arrayCopy)
+        newState = [...state]
+      if (onlyCopyPos)
+          newState.splice(pos,1,deepCopy(state[pos]))
+    }
 
     return {newState:newState,pos,id,
             name: payload.name || exists && state[pos].name,
@@ -57,7 +58,7 @@ export default createReducer({},{
         return newState;
       },
   [DELETE_TASK]: (state,payload) => {
-        var {newState,pos,exists} = initReducer(state,payload)
+        var {newState,pos,exists} = initReducer(state,payload,null,true)
         if (exists) {
           newState.splice(payload.pos,1);
           return newState;
@@ -67,34 +68,38 @@ export default createReducer({},{
 
 
   [PROCESS_START]: (state,payload) => {
-        var {newState,pos} = initReducer(state,payload,true)
+        var {newState,pos} = initReducer(state,payload,true,true)
         newState[pos].isFetching=true
+        newState[pos].result={progress: {message:"Előkészités...",percent:0}}
         return newState;
     },
   [PROCESS_DONE]: (state,payload) => {
-        var {newState,pos,exists} = initReducer(state,payload,true)
+        var {newState,pos,exists} = initReducer(state,payload,true,true)
         if (exists) {
           newState[pos].isFetching=false
-          newState[pos].result = payload.result
+          newState[pos].result = {progress: {message:"Végrehajtva",percent:100},
+                                  content:payload.result}
           return newState;
         }
         return state;
       },
   [PROCESS_FAILED]: (state,payload) => {
-        var {newState,pos,id,exists} = initReducer(state,payload,true)
+        var {newState,pos,id,exists} = initReducer(state,payload,true,true)
         if (exists) {
           newState[pos].isFetching=false
-          newState[pos].result = undefined
-          newState[pos].message = payload.message
+          newState[pos].result = {...newState[pos].result,
+                                  error:payload.message}
           return newState;
         }
         return state;
     },
   [PROCESS_MESSAGE]: (state,payload) => {
-        var {newState,pos,exists} = initReducer(state,payload,true)
+        var {newState,pos,exists} = initReducer(state,payload,true,true)
         if (exists) {
-          newState[pos].isFetching=true
-          newState[pos].message = payload.message
+          newState[pos].isFetching= true
+          newState[pos].result = {progress:
+                                      {message:payload.message,
+                                      percent:payload.percent}}
           return newState;
         }
         return state;

@@ -7,10 +7,12 @@ import {combineReducers} from "redux";
 import selectorReducers from "features/selectorReducers";
 import builderReducers from "features/msc/builder_tab/builder/builderReducers"
 import typeFetcherReducers from "features/msc/typeFetcher/typeFetcherReducers"
+import uiReducers from "app/reducers/uiReducers"
 
 
 const ui_state = combineReducers({
-    "selectors": selectorReducers
+    "selectors": selectorReducers,
+    "ui_state": uiReducers
 });
 
 

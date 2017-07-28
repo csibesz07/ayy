@@ -1,4 +1,4 @@
-const args = ['start'];
+const args = ['start','D:\\VM\\subtitles_source\\opensubtitles\\test','D:\\VM\\pdae-repo-python'];
 const opts = {
     stdio: 'inherit',
     cwd: 'server',

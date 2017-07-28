@@ -18,7 +18,7 @@ const mapStateToProps= () => {
     ],
       (tasks,types) =>
         ({components: tasks.map( task => {
-                      const {type,key} = getTypeForTask(types,task)
+                      const {type,key} = getTypeForTask(types.operations,task)
                       return {...task, title:task.name,
                         ...(propsByType[key] || {}),
                         description: key,isStepFetching:task.isFetching}

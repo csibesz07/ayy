@@ -6,7 +6,7 @@ import "semantic-ui-css/semantic.css";
 
 import configureStore from "app/store/configureStore";
 
-import App from "app/layout/App"
+import AppContainer from "app/layout/AppContainer"
 
 const initialState={
     'ui': {
@@ -84,7 +84,7 @@ let render = () => {
 
     ReactDOM.render(
         <Provider store={store}>
-            <App/>
+            <AppContainer/>
         </Provider>,
         rootEl
     );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StickyContainer, Sticky } from 'react-sticky';
-import {Header,Container,Segment,Divider, Icon} from "semantic-ui-react";
+import {Header,Container,Segment,Divider, Icon,Message,Grid} from "semantic-ui-react";
 import TabBar from "features/tabs/TabBar";
 import NavContainer from "features/NavContainer";
 import Stepper from "features/msc/steps/Stepper"
@@ -77,6 +77,11 @@ export default class App extends Component {
                       inverted storeID="main-tab" id="main-tab" components={tabs} icon='labeled'/>
                   </div>
               </HeaderContainer>
+          { this.props.error && <Grid centered style={{marginBottom:"1%"}}>
+                                    <Message compact float negative onDismiss={this.props.onErrorDismiss}>
+                                    <Message.Header>Hiba történt!</Message.Header>
+                                    <p>{this.props.error}</p>
+                                </Message></Grid>}
           <StickyContainer>
                 <MainContainer storeID="main-tab" components={tabs.slice(1)}>
                       <div/>

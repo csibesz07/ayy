@@ -69,10 +69,22 @@ export function process_tasks(pos) {
     dispatch(start_process(pos))
     const state= getState()
     const id = state.builder[pos].id
-
-    //async fetch
-    setTimeout(function(){
-      dispatch(finish_process(id));
-    }, 3000);
+    progressTest(id,dispatch,10000,5)()
   }
+}
+
+
+function progressTest(id,dispatch,time,times){
+  var timeout = (time,percent,func) =>
+      () => setTimeout(function(){
+        dispatch(update_process(id,null,percent));
+        func();
+      }, time);
+
+  setTimeout(()=>dispatch(update_process(id,"Kérés elküldve...",5)),1000);
+  var func = timeout(time/times,100,()=>dispatch(finish_process(id,"Sajnalom...")))//finish_process(id)))
+  for (var i=times-2;i>0;--i) {
+      func = timeout(time/times,i/times*100,func)
+  }
+  return func
 }

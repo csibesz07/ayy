@@ -13,10 +13,10 @@ const mapStateToProps= () => {
     return createSelector([
       (state,props) => state.builder[props.pos],
       (state) => state.builder.length,
-      (state) => state.app_data.types,
+      (state) => state.app_data.types
     ],
       (item,length,types) => {
-        var {type,key} = getTypeForTask(types,item)
+        var {type,key} = getTypeForTask(types.operations,item)
         var type_params= type && type.params
         return {
             current: {
@@ -26,7 +26,8 @@ const mapStateToProps= () => {
             types: types,
             isFetchingType: Object.getOwnPropertyNames(types).length == 0,
             isFetchingProcess: item.isFetching,
-            canDelete: length>1
+            canDelete: length>1,
+            result: item.result
         }}
       )
 }
