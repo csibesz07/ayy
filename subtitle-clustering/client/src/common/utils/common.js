@@ -182,6 +182,29 @@ export function deepCopyCircular(src, /* INTERNAL */ _visited, _copiesVisited) {
     return dest;
 }
 
+export function mergeRecursive(obj1, obj2)  {
+
+  for (var p in obj2) {
+    try {
+      // Property in destination object set; update its value.
+      if ( obj2[p].constructor==Object ) {
+        obj1[p] = mergeRecursive(obj1[p], obj2[p]);
+
+      } else {
+        obj1[p] = obj2[p];
+
+      }
+
+    } catch(e) {
+      // Property in destination object not set; create it and set its value.
+      obj1[p] = obj2[p];
+
+    }
+  }
+
+  return obj1;
+}
+
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);

@@ -38,8 +38,9 @@ export default class ParamContainer extends React.Component {
                                   </Item.Group>
                                 </Grid.Column>
                                 <Grid.Column verticalAlign="middle" width={6}>
-                                    <ParamComponent onParamChange={value=>onParamChange({...defaultParams, [key]:value})}
-                                    defaultParam={defaultParams[key]}
+                                    <ParamComponent onParamChange={value=>onParamChange({[key]:value})}
+                                    current_value={defaultParams[key]}
+                                    default_value={params[key].default_value}
                                     name={key} type={params[key].type} pv={params[key].possible_values}/>
                               </Grid.Column>
                               </Grid.Row>)

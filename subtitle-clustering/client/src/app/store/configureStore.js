@@ -5,13 +5,14 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk'
 
 import rootReducer from "app/reducers/rootReducer";
+import persistState from 'redux-localstorage';
 
 
 export default function configureStore(preloadedState) {
     const middlewares = [thunk];
     const middlewareEnhancer = applyMiddleware(...middlewares);
 
-    const storeEnhancers = [middlewareEnhancer];
+    const storeEnhancers = [middlewareEnhancer,persistState("builder")];
 
     const composedEnhancer = composeWithDevTools(...storeEnhancers);
 

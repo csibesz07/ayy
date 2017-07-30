@@ -30,44 +30,44 @@ const initialState={
         },
     "builder" : [
       {
-        'id':1,
-        name: "CountExtractor",
-        params: {}
+        "id":1,
+        "name": "CountExtractor",
+        "params": {}
       },
       {
-        'id':2,
-        name: "HashingExtractor",
-        params: {}
+        "id":7,
+        "name": "LatentSemanticAnalysis",
+        "params": {
+            "output_dimensions": 75
+        }
       },
       {
-        'id':3,
-        name: "NonNegativeMatrixFactorization",
-        params: {}
+        "id":2,
+        "name": "Kmeans",
+        "params": {}
       },
       {
-        'id':4,
-        name: "AffinityClustering",
-        params: {}
+        "id":6,
+        "name": "CalinskiHarabazAnalysis",
+        "params": {}
       },
       {
-        'id':5,
-        name: "HierarchicalClustering",
-        params: {}
+        "id":8,
+        "name": "RangeTask",
+        "params": {
+          "attr" : "n_cluster",
+		      "rfrom" : 20,
+		      "rto" : 100,
+		      "inc" : 5,
+		      "rtype": "int"
+        }
       },
       {
-        'id':6,
-        name: "CalinskiHarabazAnalysis",
-        params: {}
-      },
-      {
-        'id':7,
-        name: "ValuePlotter",
-        params: {}
-      },
-      {
-        'id':8,
-        name: "RangeTask",
-        params: {}
+        "id":10,
+        "name": "ValuePlotter",
+        "params": {
+          "key" : "score"
+        }
       }
     ],
 }

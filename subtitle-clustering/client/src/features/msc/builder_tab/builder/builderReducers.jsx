@@ -3,9 +3,9 @@ import {DELETE_TASK,ADD_TASK,MODIFY_TASK,LAST_PLACE,
 
 import {createReducer} from "common/utils/reducerUtils";
 
-import { makeid,checkPos,deepCopy} from "common/utils/common"
+import { makeid,checkPos,deepCopy,mergeRecursive} from "common/utils/common"
 
-function initReducer(state,payload,onlyCopyPos,arrayCopy,deepCopyState) {
+function initReducer(state,payload,arrayCopy,onlyCopyPos) {
     if (!checkPos(payload.pos) && !payload.id)
         throw new Error("No id and no pos provided.")
 
@@ -20,7 +20,7 @@ function initReducer(state,payload,onlyCopyPos,arrayCopy,deepCopyState) {
     var exists = -1 < pos && pos < state.length
 
     var newState
-    if (deepCopyState)
+    if (!arrayCopy && !onlyCopyPos)
       newState=deepCopy(state)
     else {
       newState = state
@@ -39,11 +39,13 @@ function initReducer(state,payload,onlyCopyPos,arrayCopy,deepCopyState) {
 
 export default createReducer({},{
   [MODIFY_TASK] : (state,payload) => {
-        var {newState,pos,id,name,params} = initReducer(state,payload,true)
+        var {newState,pos,id,name,params} = initReducer(state,payload,true,true)
+        var param = deepCopy(state[pos].params)
+        mergeRecursive(param,params)
         newState[pos] = {
             id : id,
             name : name,
-            params: params,
+            params: param,
             ...state[pos].other,...payload.other}
         return newState;
       },
@@ -58,7 +60,7 @@ export default createReducer({},{
         return newState;
       },
   [DELETE_TASK]: (state,payload) => {
-        var {newState,pos,exists} = initReducer(state,payload,null,true)
+        var {newState,pos,exists} = initReducer(state,payload,true)
         if (exists) {
           newState.splice(payload.pos,1);
           return newState;

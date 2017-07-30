@@ -9,9 +9,11 @@ export function fetch_types() {
         setTimeout(() => dispatch(clear_error(true)),10000)
       }
 
+      if (state.app_data.types && state.app_data.types.operations && state.app_data.types.results) return;
+
       dispatch({type:TYPES_FETCH})
 
-      fetch('http://localhost:3000/endpoint/builder/types')
+      fetch('/endpoint/builder/types')
         .then(response => response.json())
         .then(responseJson =>
               dispatch({type:TYPES_FETCHED, payload:{types:responseJson}}))

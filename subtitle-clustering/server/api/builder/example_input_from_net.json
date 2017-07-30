@@ -1,0 +1,45 @@
+{
+  "payload": { "id": 123},
+  "tasks":[
+      {
+        "id":1,
+        "name": "CountExtractor",
+        "params": {}
+      },
+      {
+        "id":7,
+        "name": "LatentSemanticAnalysis",
+        "params": {
+            "output_dimension": 500
+        }
+      },
+      {
+        "id":2,
+        "name": "Kmeans",
+        "params": {}
+      },
+      {
+        "id":6,
+        "name": "CalinskiHarabazAnalysis",
+        "params": {}
+      },
+      {
+        "id":8,
+        "name": "RangeTask",
+        "params": {
+          "attr" : "n_cluster",
+		      "rfrom" : 20,
+		      "rto" : 30,
+		      "inc" : 5,
+		      "rtype": "int"
+        }
+      },
+      {
+        "id":7,
+        "name": "ValuePlotter",
+        "params": {
+          "key" : "score"
+        }
+      }
+    ]
+}

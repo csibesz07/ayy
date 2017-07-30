@@ -13,40 +13,47 @@ export default class ParamComponent extends React.Component {
     }
 
     render() {
-        var {onParamChange,defaultParam,name,pv,type, ...otherProps} = this.props;
+        var {onParamChange,current_value,default_value,name,pv,type, ...otherProps} = this.props;
 
         var Final=null
 
-        if (!defaultParam) {
-          switch (type) {
-            case "float":case "int":
-              defaultParam=0;
-              break;
-            case "bool":
-              defaultParam=false;
-              break;
-            default:
+        if (!current_value && current_value!=0) {
+          if (default_value)
+            current_value = default_value
+          else
+            switch (type) {
+              case "float":case "int":
+                current_value=0;
+                break;
+              case "bool":
+                current_value=false;
+                break;
+              default:
+              current_value="Default";
+                break;
           }
+          onParamChange(current_value)
+          return null
         }
 
         switch (type) {
           case "float":
-            Final = <NumericInput onChange={value=> onParamChange(value)} value={defaultParam} step={0.1} precision={2} value={defaultParam}/>
+            Final = <NumericInput onChange={value=> onParamChange(value)} value={current_value} step={0.1} precision={2} value={current_value}/>
             break;
           case "int":
-            Final = <NumericInput onChange={value=> onParamChange(value)} value={defaultParam}/>
+            Final = <NumericInput onChange={value=> onParamChange(value)} value={current_value}/>
             break;
           case "string":
             Final =   <Input
                         label={{ tag: true, content: name }}
                         labelPosition='right'
                         placeholder='Írb be a paramétert'
-                        value={defaultParam}
+                        value={current_value}
                         onChange={(e,data)=> onParamChange(data.value)}
                       />
             break;
           case "bool":
-            Final = <Checkbox toggle checked={defaultParam} onChange={(e,data)=> onParamChange(data.value)}/>
+            Final = <Checkbox toggle checked={current_value} onChange={(e,data)=> onParamChange(data.value)}/>
             break;
           default:
             if (pv)
@@ -58,7 +65,7 @@ export default class ParamComponent extends React.Component {
                           label={value}
                           name="name"
                           value={value}
-                          checked={defaultParam === value}
+                          checked={current_value === value}
                           onChange={(e,data)=> onParamChange(data.value)}
                         />
                       </Form.Field>)

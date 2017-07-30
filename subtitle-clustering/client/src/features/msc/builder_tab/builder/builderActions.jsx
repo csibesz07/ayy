@@ -1,7 +1,8 @@
 import {DELETE_TASK,ADD_TASK,MODIFY_TASK,PROCESS_TASKS,LAST_PLACE,
         PROCESS_START,PROCESS_MESSAGE,PROCESS_FAILED,PROCESS_DONE} from "./builderConstants";
 
-import { checkPos} from "common/utils/common"
+import {checkPos} from "common/utils/common"
+import {clear_error,error} from "app/reducers/uiActions"
 
 export function add_task(pos,name,params,...other) {
   return {
@@ -67,10 +68,63 @@ export function start_process(pos) {
 export function process_tasks(pos) {
   return (dispatch,getState) => {
     dispatch(start_process(pos))
-    const state= getState()
+    var state= getState()
     const id = state.builder[pos].id
-    progressTest(id,dispatch,10000,5)()
+
+    fetch('/endpoint/builder/tasks', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({tasks:state.builder.slice(0,pos+1)})
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+          var state = getState();
+          var item = state.builder.find(item=>item.id==id)
+          if (!item) return;
+
+          if (!responseJson)
+              return dispatch(error("Nem érkezett vissza üzenet, "+ item.name))
+          if (responseJson.error)
+              return dispatch(error(responseJson.error))
+
+          if (!responseJson.id)
+            return dispatch(error("Hibaüzenet és callback id nélkül érkezett válasz POST kérés után, szerver probléma..."))
+
+          fetchUpdate(responseJson.id,dispatch,getState,id)
+      })
+
+    //progressTest(id,dispatch,10000,5)()
   }
+}
+
+
+function fetchUpdate(update_id,dispatch,getState,item_id) {
+    fetch('/endpoint/builder/tasks/'+update_id)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      var state = getState()
+      var item = state.builder.find(item=>item.id==item_id)
+      if (!item) return;
+
+      if (!responseJson)
+          return dispatch(error("Nem érkezett vissza üzenet, "+ item.name))
+
+      if (responseJson.update) {
+          dispatch(update_process(item_id,responseJson.update.message,responseJson.update.percent))
+          return setTimeout(() => fetchUpdate(update_id,dispatch,getState,item_id),2000)
+        }
+
+      if (responseJson.error)
+          return dispatch(fail_process(item_id,responseJson.error))
+
+      if (responseJson.result)
+          return dispatch(finish_process(item_id,responseJson.result))
+
+      return dispatch(error("Nem elvárt üzenet érkezett a GET hivásból, "+ item.name))
+    })
 }
 
 

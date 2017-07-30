@@ -32,6 +32,7 @@ app.use(bodyParser.urlencoded({
 app.use(procexss())
 
 app.use(express.static(public_folder));
+app.use(express.static("cache/"));
 
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
@@ -39,7 +40,6 @@ if (process.env.NODE_ENV === 'production') {
 };
 
 var endpoint = require("./api/main")(resource_folder,python_folder,(data) => {
-			console.log("FUUUCK")
 			app.listen(app.get('port'), () => {
 				console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 			});

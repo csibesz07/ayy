@@ -1,2 +1,4 @@
 node_modules
 subtitle-clustering/client/public/
+
+subtitle-clustering/server/cache/
