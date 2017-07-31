@@ -1,8 +1,15 @@
 import {DELETE_TASK,ADD_TASK,MODIFY_TASK,PROCESS_TASKS,LAST_PLACE,
-        PROCESS_START,PROCESS_MESSAGE,PROCESS_FAILED,PROCESS_DONE} from "./builderConstants";
+        PROCESS_START,PROCESS_MESSAGE,PROCESS_FAILED,PROCESS_DONE,
+        CLEAR_TASKS} from "./builderConstants";
 
 import {checkPos} from "common/utils/common"
 import {clear_error,error} from "app/reducers/uiActions"
+
+export function clear_tasks() {
+  return {
+    type : CLEAR_TASKS
+  }
+}
 
 export function add_task(pos,name,params,...other) {
   return {
@@ -71,7 +78,7 @@ export function process_tasks(pos) {
     var state= getState()
     const id = state.builder[pos].id
 
-    fetch('/endpoint/builder/tasks', {
+    fetch('http://localhost:3001/endpoint/builder/tasks', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -102,7 +109,7 @@ export function process_tasks(pos) {
 
 
 function fetchUpdate(update_id,dispatch,getState,item_id) {
-    fetch('/endpoint/builder/tasks/'+update_id)
+    fetch('http://localhost:3001/endpoint/builder/tasks/'+update_id)
     .then((response) => response.json())
     .then((responseJson) => {
       var state = getState()

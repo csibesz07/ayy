@@ -58,7 +58,7 @@ function transform_request(input_tasks) {
 			if (step._type=="range_task") {
 				step._steps=steps
 				common.mergeRecursive(step,{"_steps":steps})
-				var range = (task.params.rto - task.params.rfrom)/task.params.inc + 1
+				var range = (task.params.rto - task.params.rfrom)/task.params.inc
 				count = count * (range || 1) + 1
 				steps=[step]
 			}

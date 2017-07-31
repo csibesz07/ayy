@@ -5,6 +5,8 @@ import {createSelector} from "reselect";
 
 import {clear_error} from "app/reducers/uiActions"
 
+import {clear_tasks} from "features/msc/builder_tab/builder/builderActions"
+
 import App from "./App"
 
 var paramMap
@@ -20,7 +22,9 @@ const mapsStateToProps= () => {
       }))
 }
 
-const mapDispatchToProps= (props,dispatch) => ({onErrorDismiss: () => clear_error()})
-
+const mapDispatchToProps= (props,dispatch) => {
+      dispatch(clear_tasks())
+      return {onErrorDismiss: () => clear_error()}
+}
 
 export default connect(mapsStateToProps,createActionsUsesProps(mapDispatchToProps))(App);

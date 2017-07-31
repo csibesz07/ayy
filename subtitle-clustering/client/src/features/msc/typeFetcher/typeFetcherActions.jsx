@@ -13,7 +13,7 @@ export function fetch_types() {
 
       dispatch({type:TYPES_FETCH})
 
-      fetch('/endpoint/builder/types')
+      fetch('http://localhost:3001/endpoint/builder/types')
         .then(response => response.json())
         .then(responseJson =>
               dispatch({type:TYPES_FETCHED, payload:{types:responseJson}}))

@@ -1,5 +1,6 @@
 import {DELETE_TASK,ADD_TASK,MODIFY_TASK,LAST_PLACE,
-        PROCESS_START,PROCESS_MESSAGE,PROCESS_FAILED,PROCESS_DONE} from "./builderConstants";
+        PROCESS_START,PROCESS_MESSAGE,PROCESS_FAILED,PROCESS_DONE,
+        CLEAR_TASKS} from "./builderConstants";
 
 import {createReducer} from "common/utils/reducerUtils";
 
@@ -38,6 +39,10 @@ function initReducer(state,payload,arrayCopy,onlyCopyPos) {
 
 
 export default createReducer({},{
+  [CLEAR_TASKS] : (state,payload) => {
+      var newState = state.map(item => ({...item,isFetching:false}))
+      return newState;
+  },
   [MODIFY_TASK] : (state,payload) => {
         var {newState,pos,id,name,params} = initReducer(state,payload,true,true)
         var param = deepCopy(state[pos].params)

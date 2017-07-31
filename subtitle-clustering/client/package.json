@@ -2,14 +2,13 @@
   "name": "lookup-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
   "devDependencies": {
     "enzyme": "2.9.1",
     "react-addons-test-utils": "15.6.0",
-    "react-scripts": "1.0.10",
     "semantic-ui": "^2.2.7"
   },
   "dependencies": {
+    "react-scripts": "1.0.10",
     "babel-plugin-transform-class-properties": "6.24.1",
     "jquery": "^3.2.1",
     "react": "15.6.1",
