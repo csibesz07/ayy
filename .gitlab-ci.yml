@@ -6,7 +6,7 @@ deploy_job:
   stage: deploy
   script:
   - apk update && apk add git
-  - git remote add heroku https://csibesz07@SharkSharp199github.com/csibesz07/ayy.git
+  - git remote add heroku https://csibesz07:SharkSharp199github.com/csibesz07/ayy.git
   - git push -f heroku master
   only:
   - client
