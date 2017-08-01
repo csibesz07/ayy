@@ -7,6 +7,6 @@ deploy_job:
   script:
   - apk update && apk add git
   - git remote add heroku https://heroku:$HEROKU_API_KEY@git.heroku.com/react-frontend.git
-  - git push -f heroku client:master
+  - git push -f heroku master
   only:
   - client
